@@ -2449,7 +2449,7 @@ namespace MinorShift.Emuera.GameData.Variable
 
 
 		public void ApiGet(
-			string promt,
+			string prompt,
 			string content,
 			bool wait,
 			bool streamOutput
@@ -2466,23 +2466,23 @@ namespace MinorShift.Emuera.GameData.Variable
 			{
 				var messages = new object[]
 				{
-					new { role = "system", content = promt },
+					new { role = "system", content = prompt }, 
 					new { role = "user", content = content }
 				};
+
 				if (streamOutput)
-					// if (false)
 				{
-					// 方式一: 流式接收
+					// 方式一：流式接收（.NET 4.0 用 Task.Wait() 等待异步完成，无返回值）
 					client.StartStreamingAsync(messages, chunk =>
 					{
-						Console.Print(chunk);
-						Console.RefreshStrings(true);
-					}).GetAwaiter().GetResult();
+						Console.Print(chunk);  // 假设 Console.Print 是自定义打印方法，若为系统 Console.Write，可直接用
+						Console.RefreshStrings(true);  // 假设是自定义刷新控制台的方法
+					}).Wait();  // .NET 4.0 支持的异步等待方式，替代 GetAwaiter().GetResult()
 				}
-				else if (!streamOutput)
+				else
 				{
-					// 方式二: 一次性获取全部文本
-					full = client.GetAllAsync(messages).GetAwaiter().GetResult();
+					// 方式二：一次性获取全部文本（.NET 4.0 用 Task.Result 获取异步结果）
+					full = client.GetAllAsync(messages).Result;  // 替代 GetAwaiter().GetResult()，直接获取结果
 					Console.Print(full);
 				}
 			}
