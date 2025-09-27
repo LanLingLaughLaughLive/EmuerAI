@@ -1,0 +1,14 @@
+﻿# curl http://localhost:11434/api/generate -d '{
+#  "model": "llama3.2",
+#  "prompt": "Why is the sky blue?"
+#}'
+POST http://localhost:11434/api/generate
+Content-Type: application/json
+
+{
+  "model": "deepseek-r1:32b",
+  "prompt": "Why is the sky blue?"
+}
+
+###
+
