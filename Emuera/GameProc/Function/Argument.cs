@@ -539,6 +539,16 @@ namespace MinorShift.Emuera.GameProc.Function
 	#endregion
 
 
+	internal sealed class AiTalkArgument : Argument
+	{
+		public AiTalkArgument(IOperandTerm p1, IOperandTerm p2)
+		{
+			Promt = p1;
+			Content = p2;
+		}
+		readonly public IOperandTerm Promt;
+		readonly public IOperandTerm Content;
+	}
 
 
 }

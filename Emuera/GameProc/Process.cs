@@ -135,6 +135,13 @@ namespace MinorShift.Emuera.GameProc
                 }
 				console.SetWindowTitle(gamebase.ScriptWindowTitle);
 				GlobalStatic.GameBaseData = gamebase;
+				
+				// AI CONFIG
+				AiConfig aiConfig = new AiConfig();
+				aiConfig.LoadAiConfig(Program.ExeDir + "ai_config.txt");
+				
+				GlobalStatic.AiConfig = aiConfig;
+				
 
 				//前記以外のcsvを全て読み込み
 				ConstantData constant = new ConstantData(gamebase);
@@ -142,7 +149,7 @@ namespace MinorShift.Emuera.GameProc
 				GlobalStatic.ConstantData = constant;
 				TrainName = constant.GetCsvNameList(VariableCode.TRAINNAME);
 
-                vEvaluator = new VariableEvaluator(gamebase, constant);
+                vEvaluator = new VariableEvaluator(gamebase, constant, console);
 				GlobalStatic.VEvaluator = vEvaluator;
 
 				idDic = new IdentifierDictionary(vEvaluator.VariableData);

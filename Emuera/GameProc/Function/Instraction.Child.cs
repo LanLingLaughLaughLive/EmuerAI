@@ -2437,6 +2437,50 @@ namespace MinorShift.Emuera.GameProc.Function
 				state.JumpTo(jumpto);
 			}
 		}
+		
+		private sealed class AITALK_Instruction : AbstractInstruction
+		{
+			/**
+			 * W : wait input
+			 * S : stream output
+			 */
+			private bool waitInput = false;
+
+			private bool streamOutput = false;
+			
+			public AITALK_Instruction(string funcCode)
+			{
+				ArgBuilder = ArgumentParser.GetArgumentBuilder(FunctionArgType.AI_TALK);
+				flag = METHOD_SAFE | EXTENDED;
+				if (funcCode.EndsWith("WS"))
+				{
+					waitInput = true;
+					streamOutput = true;
+				}
+				else if (funcCode.EndsWith("S"))
+				{
+					streamOutput = true;
+				}
+				else if (funcCode.EndsWith("W"))
+				{
+					waitInput = true;
+				}
+			}
+
+			public override void DoInstruction(ExpressionMediator exm, InstructionLine func, ProcessState state)
+			{
+				AiTalkArgument aiTalkArgument = (AiTalkArgument)func.Argument;
+				exm.VEvaluator.ApiGet(
+					aiTalkArgument.Promt.GetStrValue(exm),
+					aiTalkArgument.Content.GetStrValue(exm),
+					waitInput,
+					streamOutput
+					);
+				
+			}
+		}
+
+		
 		#endregion
 	}
 }

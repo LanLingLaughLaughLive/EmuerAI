@@ -4,13 +4,15 @@ using System.Collections;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using MinorShift.Emuera.Sub;
 using MinorShift.Emuera.GameView;
 using MinorShift.Emuera.GameData.Expression;
 using MinorShift.Emuera.GameProc;
 using MinorShift._Library;
 using MinorShift.Emuera.GameProc.Function;
-//using System.Windows.Forms;
+
 
 namespace MinorShift.Emuera.GameData.Variable
 {
@@ -20,16 +22,19 @@ namespace MinorShift.Emuera.GameData.Variable
 		readonly ConstantData constant;
 		readonly VariableData varData;
 		MTRandom rand = new MTRandom();
+		public readonly EmueraConsole Console;
+		
 
 		public VariableData VariableData { get { return varData; } }
 		internal ConstantData Constant { get { return constant; } }
 
-		public VariableEvaluator(GameBase gamebase, ConstantData constant)
+		public VariableEvaluator(GameBase gamebase, ConstantData constant, EmueraConsole console)
 		{
 			this.gamebase = gamebase;
 			this.constant = constant;
 			varData = new VariableData(gamebase, constant);
 			GlobalStatic.VariableData = varData;
+			Console = console;
 		}
 		#region set/get
 
@@ -2441,6 +2446,54 @@ namespace MinorShift.Emuera.GameData.Variable
 			File.Delete(filepath);
 			return;
 		}
+
+
+		public void ApiGet(
+			string promt,
+			string content,
+			bool wait,
+			bool streamOutput
+		)
+		{
+			if (!GlobalStatic.AiConfig.UseAi)
+			{
+				return;
+			}
+
+			string full = "";
+
+			using (var client = new ChatClient())
+			{
+				var messages = new object[]
+				{
+					new { role = "system", content = promt },
+					new { role = "user", content = content }
+				};
+				if (streamOutput)
+					// if (false)
+				{
+					// 方式一: 流式接收
+					client.StartStreamingAsync(messages, chunk =>
+					{
+						Console.Print(chunk);
+						Console.RefreshStrings(true);
+					}).GetAwaiter().GetResult();
+				}
+				else if (!streamOutput)
+				{
+					// 方式二: 一次性获取全部文本
+					full = client.GetAllAsync(messages).GetAwaiter().GetResult();
+					Console.Print(full);
+				}
+			}
+
+			if (wait)
+			{
+				Console.ReadAnyKey();
+			}
+		}
+
+
 
 
 

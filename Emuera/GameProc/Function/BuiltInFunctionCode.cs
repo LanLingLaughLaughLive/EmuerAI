@@ -124,6 +124,11 @@ namespace MinorShift.Emuera.GameProc.Function
 		ADDCOPYCHARA,
 		VARSIZE,//動作が違うので__METHOD__化できない
 		SPLIT,
+		
+		AITALK,
+		AITALKW,
+		AITALKS,
+		AITALKWS,
 
 		PRINTSINGLE,
 		PRINTSINGLEV,

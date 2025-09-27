@@ -71,6 +71,12 @@ namespace MinorShift.Emuera.GameProc.Function
 		{
 			addFunction(code, new PRINT_Instruction(code.ToString()));
 		}
+
+		private static void addAiPrintFunction(FunctionCode code)
+		{
+			addFunction(code, new AITALK_Instruction(code.ToString()));
+		}
+		
 		private static void addPrintDataFunction(FunctionCode code)
 		{
 			addFunction(code, new PRINT_DATA_Instruction(code.ToString()));
@@ -260,7 +266,7 @@ namespace MinorShift.Emuera.GameProc.Function
 			addFunction(FunctionCode.COPYCHARA, new COPYCHARA_Instruction());
 			addFunction(FunctionCode.ADDCOPYCHARA, new ADDCOPYCHARA_Instruction());
 			addFunction(FunctionCode.SPLIT, argb[FunctionArgType.SP_SPLIT], METHOD_SAFE | EXTENDED);
-
+			
 			addFunction(FunctionCode.SETCOLOR, argb[FunctionArgType.SP_COLOR], METHOD_SAFE | EXTENDED);
 			addFunction(FunctionCode.SETCOLORBYNAME, argb[FunctionArgType.STR], METHOD_SAFE | EXTENDED);
 			addFunction(FunctionCode.RESETCOLOR, new RESETCOLOR_Instruction());
@@ -379,6 +385,13 @@ namespace MinorShift.Emuera.GameProc.Function
 
 			addFunction(FunctionCode.INPUTMOUSEKEY, new INPUTMOUSEKEY_Instruction());
 			addFunction(FunctionCode.AWAIT, new AWAIT_Instruction());
+			
+			// AI  func
+			addAiPrintFunction(FunctionCode.AITALK);
+			addAiPrintFunction(FunctionCode.AITALKW);
+			addAiPrintFunction(FunctionCode.AITALKS);
+			addAiPrintFunction(FunctionCode.AITALKWS);
+
 			#region 式中関数の引数違い
 			addFunction(FunctionCode.VARSIZE, argb[FunctionArgType.SP_VAR], METHOD_SAFE | EXTENDED);//動作が違うのでMETHOD化できない
 			addFunction(FunctionCode.GETTIME, argb[FunctionArgType.VOID], METHOD_SAFE | EXTENDED);//2つに代入する必要があるのでMETHOD化できない

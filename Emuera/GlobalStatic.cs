@@ -34,6 +34,7 @@ namespace MinorShift.Emuera
 		public static ExpressionMediator EMediator;
 		//
 		public static LabelDictionary LabelDictionary;
+		public static AiConfig AiConfig;
 
 
 		//ERBloaderに引数解析の結果を渡すための橋渡し変数
@@ -54,6 +55,7 @@ namespace MinorShift.Emuera
 			MainWindow = null;
 			LabelDictionary = null;
 			IdentifierDictionary = null;
+			AiConfig = null;
 			tempDic.Clear();
 		}
 	}
