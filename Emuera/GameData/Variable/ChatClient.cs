@@ -47,32 +47,16 @@ public class ChatClient : IDisposable
 
     private string BuildRequestBody(object[] messages, bool stream)
     {
-        var body = new JObject
-        {
-            ["model"] = "nalang-xl-10",
-            ["messages"] = JArray.FromObject(messages),
-            ["stream"] = stream,
-            ["temperature"] = 0.7,
-            ["max_tokens"] = 800,
-            ["top_p"] = 0.35,
-            ["repetition_penalty"] = 1.05
-        };
-        var mBody = new JObject();
+   
+        var body = new JObject();
         foreach (KeyValuePair<string,JToken> kv in GlobalStatic.AiConfig.bodyMap)
         {
-            mBody[kv.Key] = kv.Value;
+            body[kv.Key] = kv.Value;
         }
 
-        mBody["stream"] = stream;
-        mBody["messages"] = JArray.FromObject(messages);
-        var ttt = body.ToString(Formatting.None);
-        var fff = mBody.ToString(Formatting.None);
-        if (false)
-        {
-            return ttt;
-        }
-
-        return fff;
+        body["stream"] = stream;
+        body["messages"] = JArray.FromObject(messages);
+        return body.ToString(Formatting.None);
     }
 
     public async Task<string> GetAllAsync(object[] messages, CancellationToken cancellationToken = default)
