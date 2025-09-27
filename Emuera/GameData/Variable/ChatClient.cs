@@ -2,6 +2,7 @@
 // 目标: C# 7.x 兼容 (不使用 IAsyncEnumerable 或 C# 8 特性)
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -56,7 +57,22 @@ public class ChatClient : IDisposable
             ["top_p"] = 0.35,
             ["repetition_penalty"] = 1.05
         };
-        return body.ToString(Formatting.None);
+        var mBody = new JObject();
+        foreach (KeyValuePair<string,JToken> kv in GlobalStatic.AiConfig.bodyMap)
+        {
+            mBody[kv.Key] = kv.Value;
+        }
+
+        mBody["stream"] = stream;
+        mBody["messages"] = JArray.FromObject(messages);
+        var ttt = body.ToString(Formatting.None);
+        var fff = mBody.ToString(Formatting.None);
+        if (false)
+        {
+            return ttt;
+        }
+
+        return fff;
     }
 
     public async Task<string> GetAllAsync(object[] messages, CancellationToken cancellationToken = default)
