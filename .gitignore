@@ -52,3 +52,10 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+
+.idea
+.git
+/Emuera/bin
+/Emuera/obj
+packages
