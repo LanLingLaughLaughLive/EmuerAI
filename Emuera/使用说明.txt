@@ -1,0 +1,3 @@
+1. 把解压后的文件放到游戏目录下
+2. ai_config.txt 配置一下，use_ai ，use_platform， url_xxx, token_xxx 这四个一定要配，其他的看大模型api平台需要可自选增加
+3. 运行游戏
