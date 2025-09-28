@@ -4,12 +4,10 @@ Emuera with AI funcs
 
 # 使用方法
 ## 拷贝程序
-+ 去 https://github.com/LanLingLaughLaughLive/EmuerAI/releases 下载exe 放在游戏目录里
-## 补充DLL
-+ https://github.com/JamesNK/Newtonsoft.Json/releases/download/13.0.4/Json130r4.zip 下载后解压把 bin/net40/Newtonsoft.Json.dll 放在游戏目录
++ 去 https://github.com/LanLingLaughLaughLive/EmuerAI/releases 下载rar 解压放在游戏目录里
 ## AI配置
 
-+ 在游戏文件- Emuera.exe 同级目录创建 ai_config.txt , 以下是参考
++ 在游戏文件- Emuera.exe 同级目录更新 ai_config.txt , 以下是参考
 ```properties
 use_ai=1
 use_platform=dzmm
